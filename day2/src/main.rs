@@ -43,35 +43,32 @@ impl Game {
 fn score1(m: &str) -> u16 {
     let mut m = m.trim().split(" ").into_iter();
     let p1 = match m.next() {
-        Some(s) => {
-            match s {
-                "A" => Game::Rock,
-                "B" => Game::Paper,
-                "C" => Game::Scissor,
-                _ => panic!("You fucked up!"),
-            }
+        Some(s) => match s {
+            "A" => Game::Rock,
+            "B" => Game::Paper,
+            "C" => Game::Scissor,
+            _ => panic!("You fucked up!"),
         },
         None => panic!("You fucked up!"),
     };
     let p2 = match m.next() {
-        Some(s) => {
-            match s {
-                "X" => Game::Rock,
-                "Y" => Game::Paper,
-                "Z" => Game::Scissor,
-                _ => panic!("You fucked up!"),
-            }
+        Some(s) => match s {
+            "X" => Game::Rock,
+            "Y" => Game::Paper,
+            "Z" => Game::Scissor,
+            _ => panic!("You fucked up!"),
         },
         None => panic!("You fucked up!"),
     };
 
     // println!("P1 played {:?}, P2 played {:?}", p1, p2);
-    
-    let s = p2.play(p1) + match p2 {
-        Game::Rock => 1,
-        Game::Paper => 2,
-        Game::Scissor => 3,
-    };
+
+    let s = p2.play(p1)
+        + match p2 {
+            Game::Rock => 1,
+            Game::Paper => 2,
+            Game::Scissor => 3,
+        };
 
     // println!("Score -> {:?}", s);
     return s;
@@ -80,52 +77,43 @@ fn score1(m: &str) -> u16 {
 fn score2(m: &str) -> u16 {
     let mut m = m.trim().split(" ").into_iter();
     let p1 = match m.next() {
-        Some(s) => {
-            match s {
-                "A" => Game::Rock,
-                "B" => Game::Paper,
-                "C" => Game::Scissor,
-                _ => panic!("You fucked up!"),
-            }
+        Some(s) => match s {
+            "A" => Game::Rock,
+            "B" => Game::Paper,
+            "C" => Game::Scissor,
+            _ => panic!("You fucked up!"),
         },
         None => panic!("You fucked up!"),
     };
 
     let p2 = match m.next() {
-        Some(s) => {
-            match s {
-                "X" => {
-                    match p1 {
-                        Game::Rock => Game::Scissor,
-                        Game::Paper => Game::Rock,
-                        Game::Scissor => Game::Paper,
-                    }
-                },
-                "Y" => {
-                    match p1 {
-                        Game::Rock => Game::Rock,
-                        Game::Paper => Game::Paper,
-                        Game::Scissor => Game::Scissor,
-                    }
-                },
-                "Z" => {
-                    match p1 {
-                        Game::Rock => Game::Paper,
-                        Game::Paper => Game::Scissor,
-                        Game::Scissor => Game::Rock,
-                    }
-                },
-                _ => panic!("You fucked up!"),
-            }
+        Some(s) => match s {
+            "X" => match p1 {
+                Game::Rock => Game::Scissor,
+                Game::Paper => Game::Rock,
+                Game::Scissor => Game::Paper,
+            },
+            "Y" => match p1 {
+                Game::Rock => Game::Rock,
+                Game::Paper => Game::Paper,
+                Game::Scissor => Game::Scissor,
+            },
+            "Z" => match p1 {
+                Game::Rock => Game::Paper,
+                Game::Paper => Game::Scissor,
+                Game::Scissor => Game::Rock,
+            },
+            _ => panic!("You fucked up!"),
         },
         None => panic!("You fucked up!"),
     };
 
-    let s = p2.play(p1) + match p2 {
-        Game::Rock => 1,
-        Game::Paper => 2,
-        Game::Scissor => 3,
-    };
+    let s = p2.play(p1)
+        + match p2 {
+            Game::Rock => 1,
+            Game::Paper => 2,
+            Game::Scissor => 3,
+        };
 
     // println!("Score -> {:?}", s);
     return s;
