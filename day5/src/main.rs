@@ -7,16 +7,16 @@ fn main() {
     let split_data: Vec<&str> = contents.split("\n\n").collect();
 
     let arrangement = split_data[0];
-    let arrangement1 = parse(arrangement);
-    let arrangement2 = arrangement1.clone();
+    let mut arrangement1 = parse(arrangement);
+    let mut arrangement2 = arrangement1.clone();
 
     let moves: Vec<[usize; 3]> = split_data[1].trim().split("\n").into_iter().map(|s| f(s)).collect();
    
-    println!("{:?}", cargo_crane_9000(arrangement1, &moves));
-    println!("{:?}", cargo_crane_9001(arrangement2, &moves));
+    println!("{:?}", cargo_crane_9000(&mut arrangement1, &moves));
+    println!("{:?}", cargo_crane_9001(&mut arrangement2, &moves));
 }
 
-fn cargo_crane_9001(mut arrangement: HashMap<usize, Vec<char>>, moves: &Vec<[usize; 3]>) -> String {
+fn cargo_crane_9001(arrangement: &mut HashMap<usize, Vec<char>>, moves: &Vec<[usize; 3]>) -> String {
     for m in moves {
         let from = m[1];
         let to = m[2];
@@ -44,7 +44,7 @@ fn cargo_crane_9001(mut arrangement: HashMap<usize, Vec<char>>, moves: &Vec<[usi
     return s;
 }
 
-fn cargo_crane_9000(mut arrangement: HashMap<usize, Vec<char>>, moves: &Vec<[usize; 3]>) -> String {
+fn cargo_crane_9000(arrangement: &mut HashMap<usize, Vec<char>>, moves: &Vec<[usize; 3]>) -> String {
     for m in moves {
         let from = m[1];
         let to = m[2];
@@ -72,8 +72,8 @@ fn cargo_crane_9000(mut arrangement: HashMap<usize, Vec<char>>, moves: &Vec<[usi
     return s;
 }
 
-fn g(k: usize, v: Vec<char>) -> (usize, char) {
-    (k, v[v.len()-1])
+fn g(k: &usize, v: &Vec<char>) -> (usize, char) {
+    (*k, v[v.len()-1])
 }
 
 fn f(s: &str) -> [usize; 3] {
