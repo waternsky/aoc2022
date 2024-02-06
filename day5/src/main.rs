@@ -10,22 +10,30 @@ fn main() {
     let mut arrangement1 = parse(arrangement);
     let mut arrangement2 = arrangement1.clone();
 
-    let moves: Vec<[usize; 3]> = split_data[1].trim().split("\n").into_iter().map(|s| f(s)).collect();
-   
+    let moves: Vec<[usize; 3]> = split_data[1]
+        .trim()
+        .split("\n")
+        .into_iter()
+        .map(|s| f(s))
+        .collect();
+
     println!("{:?}", cargo_crane_9000(&mut arrangement1, &moves));
     println!("{:?}", cargo_crane_9001(&mut arrangement2, &moves));
 }
 
-fn cargo_crane_9001(arrangement: &mut HashMap<usize, Vec<char>>, moves: &Vec<[usize; 3]>) -> String {
+fn cargo_crane_9001(
+    arrangement: &mut HashMap<usize, Vec<char>>,
+    moves: &Vec<[usize; 3]>,
+) -> String {
     for m in moves {
         let from = m[1];
         let to = m[2];
         let amt = m[0];
-        
+
         let v = arrangement.get_mut(&from).unwrap();
-        let tmp: Vec<char> = v.drain(v.len()-amt..v.len()).collect();
+        let tmp: Vec<char> = v.drain(v.len() - amt..v.len()).collect();
         arrangement.get_mut(&to).unwrap().extend(tmp);
-    } 
+    }
 
     let ans: Vec<(usize, char)> = arrangement.into_iter().map(|(k, v)| g(k, v)).collect();
 
@@ -44,7 +52,10 @@ fn cargo_crane_9001(arrangement: &mut HashMap<usize, Vec<char>>, moves: &Vec<[us
     return s;
 }
 
-fn cargo_crane_9000(arrangement: &mut HashMap<usize, Vec<char>>, moves: &Vec<[usize; 3]>) -> String {
+fn cargo_crane_9000(
+    arrangement: &mut HashMap<usize, Vec<char>>,
+    moves: &Vec<[usize; 3]>,
+) -> String {
     for m in moves {
         let from = m[1];
         let to = m[2];
@@ -53,7 +64,7 @@ fn cargo_crane_9000(arrangement: &mut HashMap<usize, Vec<char>>, moves: &Vec<[us
             let tmp = arrangement.get_mut(&from).unwrap().pop().unwrap();
             arrangement.get_mut(&to).unwrap().push(tmp);
         }
-    } 
+    }
 
     let ans: Vec<(usize, char)> = arrangement.into_iter().map(|(k, v)| g(k, v)).collect();
 
@@ -73,7 +84,7 @@ fn cargo_crane_9000(arrangement: &mut HashMap<usize, Vec<char>>, moves: &Vec<[us
 }
 
 fn g(k: &usize, v: &Vec<char>) -> (usize, char) {
-    (*k, v[v.len()-1])
+    (*k, v[v.len() - 1])
 }
 
 fn f(s: &str) -> [usize; 3] {
@@ -90,13 +101,13 @@ fn parse(s: &str) -> HashMap<usize, Vec<char>> {
     let mut ans: HashMap<usize, Vec<char>> = HashMap::new();
     for i in 0..split_data.len() - 1 {
         let row: Vec<char> = split_data[i].chars().collect();
-        for j in 0..=row.len()/4 {
-            if row[4*j] != ' ' {
-                match ans.get_mut(&(j+1)) {
-                    Some(v) => v.push(row[4*j+1]),
+        for j in 0..=row.len() / 4 {
+            if row[4 * j] != ' ' {
+                match ans.get_mut(&(j + 1)) {
+                    Some(v) => v.push(row[4 * j + 1]),
                     None => {
-                        ans.insert(j+1, vec![row[4*j+1]]);
-                    },
+                        ans.insert(j + 1, vec![row[4 * j + 1]]);
+                    }
                 };
             }
         }
